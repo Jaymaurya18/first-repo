@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>AI Topic Recommendations</h1>
+<form method="POST">
+    <input type="text" name="area" placeholder="Type: python, ai, web dev..." required>
+    <button type="submit">Get Topics</button>
+</form>
+
+{% if topics %}
+<h3>Suggestions</h3>
+<ul>
+    {% for t in topics %}
+    <li>{{ t }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

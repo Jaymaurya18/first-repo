@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Contact</h1>
+<form method="POST">
+    <input type="text" name="name" placeholder="Your name" required><br>
+    <textarea name="message" rows="4" placeholder="Message" required></textarea><br>
+    <button type="submit">Send</button>
+</form>
+
+{% if msg %}
+<p><b>{{ msg }}</b></p>
+{% endif %}
+{% endblock %}

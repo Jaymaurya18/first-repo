@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>AI Quiz Generator</h1>
+
+{% if not quiz %}
+<form method="POST">
+    <input type="text" name="topic" placeholder="Enter topic e.g. Python basics" required>
+    <button type="submit" name="generate">Generate Quiz</button>
+</form>
+{% endif %}
+
+{% if quiz %}
+<h2>Quiz: {{ selected_topic }}</h2>
+
+<div style="width:60%; margin: 12px auto; text-align:left;">
+    <div id="progressText" style="margin-bottom:6px; font-weight:bold;">Question <span id="current">1</span> of {{ quiz|length }}</div>
+    <div style="background:#eee; height:18px; border-radius:18px;">
+        <div id="progressBar" style="background:#007bff; height:18px; width:0%; border-radius:18px;"></div>
+    </div>
+</div>
+
+<form method="POST" action="/submit_quiz" id="quizForm">
+    <input type="hidden" name="quiz_json" value='{{ quiz_json|safe }}'>
+    {% for q in quiz %}
+        {% set idx = loop.index0 %}
+        <div class="card question-box" data-index="{{ loop.index }}">
+            <p><b>{{ loop.index }}. {{ q.q }}</b></p>
+            {% for opt in q.options %}
+            <label><input type="radio" name="q{{ idx }}" value="{{ opt }}" required> {{ opt }}</label><br>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <br>
+    <button type="submit">Submit Answers</button>
+</form>
+
+<script>
+let total = {{ quiz|length }};
+let bar = document.getElementById("progressBar");
+let current = document.getElementById("current");
+let cards = document.querySelectorAll(".question-box");
+
+function updateProgress(index){
+    let percent = (index / total) * 100;
+    bar.style.width = percent + "%";
+    current.innerText = index;
+}
+
+cards.forEach((card, i) => {
+    let idx = i + 1;
+    let radios = card.querySelectorAll('input[type="radio"]');
+    radios.forEach(r => {
+        r.addEventListener('change', () => {
+            updateProgress(idx);
+        });
+    });
+});
+</script>
+{% endif %}
+{% endblock %}

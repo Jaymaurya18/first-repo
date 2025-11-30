@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Welcome to AI Learning Assistant</h1>
+<p>Use AI to get topic suggestions, generate quizzes, and chat with an assistant.</p>
+
+<div class="features">
+    <div class="card">
+        <h3>AI Recommendations</h3>
+        <p>Get topic ideas for study.</p>
+        <a class="btn" href="/recommend">Try</a>
+    </div>
+    <div class="card">
+        <h3>AI Quiz Generator</h3>
+        <p>Generate quizzes on any topic.</p>
+        <a class="btn" href="/quiz">Start</a>
+    </div>
+    <div class="card">
+        <h3>AI Chat</h3>
+        <p>Ask questions and get explanations.</p>
+        <a class="btn" href="/ask">Chat</a>
+    </div>
+</div>
+{% endblock %}
